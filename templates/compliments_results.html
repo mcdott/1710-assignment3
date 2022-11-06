@@ -1,6 +1,14 @@
 {% extends 'base.html' %} {% block title %} Compliments Results {% endblock %}
 {% block content %}
 
-<!-- Your HTML code goes here! -->
+<h1>Hello there, {{ users_name }}!</h1>
 
-{% endblock %}
+{% if wants_compliments == 'yes' %}
+<p>You are so utterly...</p>
+<ul>
+  {% random_compliments = random.sample(compliments, k = number_of_compliments)
+  %} {% for compliment in random_compliments %}
+  <li>{{ compliment }}</li>
+  {% endfor %}
+</ul>
+{% endif %} {% endblock %}
