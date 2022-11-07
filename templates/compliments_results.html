@@ -3,11 +3,9 @@
 
 <h1>Hello there, {{ users_name }}!</h1>
 
-{% if wants_compliments == 'yes' %}
-<p>You are so utterly...</p>
+{% if wants_compliments == 'yes' %} You are so utterly...
 <ul>
-  {% random_compliments = random.sample(compliments, k = number_of_compliments)
-  %} {% for compliment in random_compliments %}
+  {% for compliment in users_compliments %}
   <li>{{ compliment }}</li>
   {% endfor %}
 </ul>

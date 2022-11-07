@@ -1,13 +1,13 @@
 from flask import Flask, request, render_template
 from PIL import Image, ImageFilter
 from pprint import PrettyPrinter
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import json
 import os
 import random
 import requests
 
-load_dotenv()
+# load_dotenv()
 
 
 app = Flask(__name__)
@@ -55,11 +55,14 @@ def compliments():
 @app.route('/compliments_results')
 def compliments_results():
     """Show the user some compliments."""
+    number_of_compliments = int(request.args.get('num_compliments'))
+    users_compliments = random.sample(list_of_compliments, k = number_of_compliments)
+
+
     context = {
         'users_name': request.args.get('users_name'),
         'wants_compliments': request.args.get('wants_compliments'),
-        'number_of_compliments': request.args.get('num_compliments'),
-        'compliments': list_of_compliments
+        'users_compliments': users_compliments
     }
 
     return render_template('compliments_results.html', **context)
@@ -77,16 +80,31 @@ animal_to_fact = {
     'narwhal': 'Narwhal tusks are really an "inside out" tooth.'
 }
 
+animals = animal_to_fact.keys()
+
 @app.route('/animal_facts')
 def animal_facts():
     """Show a form to choose an animal and receive facts."""
 
     # TODO: Collect the form data and save as variables
+    # this is not working so FIGURE OUT HOW TO GET CHOSEN ANIMAL FROM THE FORM
+    chosen_animal = request.args.get('animal')
+
+    # Retrieve the fact that matches the chosen animal
+    chosen_animal_fact = None
+    for animal in animals:
+        chosen_animal_fact = 'test1'
+        if animal == chosen_animal:
+            chosen_animal_fact = animal_to_fact[animal]
+            chosen_animal_fact = 'test2'
 
     context = {
         # TODO: Enter your context variables here for:
         # - the list of all animals (get from animal_to_fact)
         # - the chosen animal fact (may be None if the user hasn't filled out the form yet)
+        'animals': animals,
+        'chosen_animal_fact': chosen_animal_fact
+       
     }
     return render_template('animal_facts.html', **context)
 
