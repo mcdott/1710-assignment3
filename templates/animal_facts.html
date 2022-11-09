@@ -10,7 +10,7 @@ content %}
 
       <select name="animal">
         {% for animal in animals %}
-        <option value=" {{animal}} ">{{ animal }}</option>
+        <option value="{{ animal }}">{{ animal }}</option>
         {% endfor %}
       </select>
     </label>
@@ -22,9 +22,9 @@ content %}
 <section id="form_results">
   <p>Here is your animal fact:</p>
   <p>
+    {% if chosen_animal_fact != None %}
     <em>{{ chosen_animal_fact }}</em>
-    <em>test3</em>
-    <em>{{ chosen_animal }}</em>
+    {% endif %}
   </p>
 </section>
 

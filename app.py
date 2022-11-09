@@ -77,7 +77,8 @@ animal_to_fact = {
     'parrot': 'Parrots will selflessly help each other out.',
     'mantis shrimp': 'The mantis shrimp has the world\'s fastest punch.',
     'lion': 'Female lions do 90 percent of the hunting.',
-    'narwhal': 'Narwhal tusks are really an "inside out" tooth.'
+    'narwhal': 'Narwhal tusks are really an "inside out" tooth.',
+    'turkey vulture': 'Turkey vultures have super strong guts - they can digest rabies and anthrax!'
 }
 
 animals = animal_to_fact.keys()
@@ -85,26 +86,17 @@ animals = animal_to_fact.keys()
 @app.route('/animal_facts')
 def animal_facts():
     """Show a form to choose an animal and receive facts."""
-
-    # TODO: Collect the form data and save as variables
-    # this is not working so FIGURE OUT HOW TO GET CHOSEN ANIMAL FROM THE FORM
-    chosen_animal = request.args.get('animal')
+        
+    animal = request.args.get('animal')
 
     # Retrieve the fact that matches the chosen animal
     chosen_animal_fact = None
-    for animal in animals:
-        chosen_animal_fact = 'test1'
-        if animal == chosen_animal:
-            chosen_animal_fact = animal_to_fact[animal]
-            chosen_animal_fact = 'test2'
+    if animal != None:
+        chosen_animal_fact = animal_to_fact[animal]
 
     context = {
-        # TODO: Enter your context variables here for:
-        # - the list of all animals (get from animal_to_fact)
-        # - the chosen animal fact (may be None if the user hasn't filled out the form yet)
         'animals': animals,
         'chosen_animal_fact': chosen_animal_fact
-       
     }
     return render_template('animal_facts.html', **context)
 
