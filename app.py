@@ -1,13 +1,13 @@
 from flask import Flask, request, render_template
 from PIL import Image, ImageFilter
 from pprint import PrettyPrinter
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 import json
 import os
 import random
 import requests
 
-# load_dotenv()
+load_dotenv()
 
 
 app = Flask(__name__)
@@ -145,27 +145,18 @@ def image_filter():
 
     if request.method == 'POST':
         
-        # TODO: Get the user's chosen filter type (whichever one they chose in the form) and save
-        # as a variable
-        # HINT: remember that we're working with a POST route here so which requests function would you use?
         filter_type = request.form.get('filter_type')
         
         # Get the image file submitted by the user
         image = request.files.get('users_image')
 
-        # TODO: call `save_image()` on the image & the user's chosen filter type, save the returned
-        # value as the new file path
         new_file_path = save_image(image, filter_type)
 
-        # TODO: Call `apply_filter()` on the file path & filter type
         apply_filter(new_file_path, filter_type)
 
         image_url = f'./static/images/{image.filename}'
 
         context = {
-            # TODO: Add context variables here for:
-            # - The full list of filter types
-            # - The image URL
             'filter_types': filter_types,
             'image_url': image_url
         }
@@ -174,7 +165,6 @@ def image_filter():
 
     else: # if it's a GET request
         context = {
-            # TODO: Add context variable here for the full list of filter types
             'filter_types': filter_types
         }
         return render_template('image_filter.html', **context)
@@ -185,36 +175,39 @@ def image_filter():
 ################################################################################
 
 
-API_KEY = os.getenv('API_KEY')
+# API_KEY = os.getenv('API_KEY')
+API_KEY = 'AIzaSyA4En-oZ11ipmuOnPlkXCFZi96Eq-ORX6Y'
 print(API_KEY)
 
-TENOR_URL = 'https://api.tenor.com/v1/search'
+# TENOR_URL = 'https://api.tenor.com/v1/search'
+TENOR_URL = 'https://tenor.googleapis.com/v2/search'
 pp = PrettyPrinter(indent=4)
 
 @app.route('/gif_search', methods=['GET', 'POST'])
 def gif_search():
     """Show a form to search for GIFs and show resulting GIFs from Tenor API."""
     if request.method == 'POST':
-        # TODO: Get the search query & number of GIFs requested by the user, store each as a 
-        # variable
+        # Get the search query & number of GIFs requested by the user, store each as a variable
+        search_query = request.form.get('search_query')
+        number_of_gifs = int(request.form.get('quantity'))
 
         response = requests.get(
             TENOR_URL,
             {
-                # TODO: Add in key-value pairs for:
-                # - 'q': the search query
-                # - 'key': the API key (defined above)
-                # - 'limit': the number of GIFs requested
+                'q': search_query,
+                'key': API_KEY,
+                'limit': number_of_gifs
             })
 
         gifs = json.loads(response.content).get('results')
+        print(gifs)
 
         context = {
             'gifs': gifs
         }
 
         # Uncomment me to see the result JSON!
-        # pp.pprint(gifs)
+        pp.pprint(gifs)
 
         return render_template('gif_search.html', **context)
     else:

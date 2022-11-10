@@ -21,8 +21,6 @@ block content %}
         Select your filter:
 
         <select name="filter_type">
-          <!-- TODO: Use a for loop to display an option element for each possible filter 
-                        type-->
           {% for filter in filter_types %}
           <option value="{{ filter }}">{{ filter }}</option>
           {% endfor %}
