@@ -175,8 +175,8 @@ def image_filter():
 ################################################################################
 
 
-# API_KEY = os.getenv('API_KEY')
-API_KEY = 'AIzaSyA4En-oZ11ipmuOnPlkXCFZi96Eq-ORX6Y'
+API_KEY = os.getenv('API_KEY')
+# API_KEY = 'AIzaSyA4En-oZ11ipmuOnPlkXCFZi96Eq-ORX6Y'
 print(API_KEY)
 
 # TENOR_URL = 'https://api.tenor.com/v1/search'
